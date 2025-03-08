@@ -3,76 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aryabodhi Game Studio - Coming Soon</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: black;
-            color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        .content {
-            position: relative;
-            z-index: 1;
-        }
-        .button {
-            background-color: #ff007f;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .button:hover {
-            transform: scale(1.1);
-        }
-    </style>
+    <title>Coming Soon</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
 </head>
 <body>
-    <canvas id="bg"></canvas>
-    <div class="content">
-        <h1>Aryabodhi Game Studio</h1>
-        <p>Something amazing is coming soon.</p>
-        <button class="button">Stay Updated</button>
+    <div class="container">
+        <h1>Coming Soon</h1>
+        <p>We're working on something amazing. Stay tuned!</p>
+        
+        <div class="countdown">
+            <div><span id="days">00</span>Days</div>
+            <div><span id="hours">00</span>Hours</div>
+            <div><span id="minutes">00</span>Minutes</div>
+            <div><span id="seconds">00</span>Seconds</div>
+        </div>
+
+        <div class="social-icons">
+            <a href="#"><img src="facebook.svg" alt="Facebook"></a>
+            <a href="#"><img src="twitter.svg" alt="Twitter"></a>
+            <a href="#"><img src="instagram.svg" alt="Instagram"></a>
+        </div>
     </div>
-
-    <script>
-        const canvas = document.getElementById("bg");
-        const ctx = canvas.getContext("2d");
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        let angle = 0;
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.save();
-            ctx.translate(canvas.width / 2, canvas.height / 2);
-            ctx.rotate(angle);
-            ctx.beginPath();
-            ctx.arc(0, 0, 100, 0, Math.PI * 2);
-            ctx.strokeStyle = "#ff007f";
-            ctx.lineWidth = 5;
-            ctx.stroke();
-            ctx.restore();
-            angle += 0.01;
-            requestAnimationFrame(animate);
-        }
-        animate();
-    </script>
 </body>
 </html>
