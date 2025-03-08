@@ -7,81 +7,76 @@
     <style>
         body {
             margin: 0;
-            overflow: hidden;
-        }
-        #container {
-            width: 100%;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             height: 100vh;
-        }
-        .overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
+            background: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
             text-align: center;
+        }
+        .container {
+            max-width: 600px;
         }
         h1 {
             font-size: 3rem;
+            margin-bottom: 10px;
         }
         p {
             font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        .countdown {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .logo {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+        .social-icons a {
+            margin: 0 10px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.5rem;
         }
     </style>
 </head>
 <body>
-    <div id="container"></div>
-    <div class="overlay">
+    <div class="container">
+        <img src="logo.png" alt="Aryabodhi Game Studio Logo" class="logo">
         <h1>Coming Soon</h1>
         <p>Something exciting is on the way! Stay tuned.</p>
+        <div class="countdown" id="countdown"></div>
+        <div class="social-icons">
+            <a href="https://twitter.com/yourprofile" target="_blank">Twitter</a>
+            <a href="https://facebook.com/yourprofile" target="_blank">Facebook</a>
+            <a href="https://instagram.com/yourprofile" target="_blank">Instagram</a>
+        </div>
     </div>
 
-    <!-- Three.js Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- Vertex Shader -->
-    <script id="vertexShader" type="x-shader/x-vertex">
-        void main() {
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-    </script>
-    <!-- Fragment Shader -->
-    <script id="fragmentShader" type="x-shader/x-fragment">
-        void main() {
-            gl_FragColor = vec4(abs(sin(gl_FragCoord.x * 0.01)), abs(sin(gl_FragCoord.y * 0.01)), 0.5, 1.0);
-        }
-    </script>
     <script>
-        // Scene setup
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.getElementById('container').appendChild(renderer.domElement);
-
-        // Geometry and material
-        const geometry = new THREE.PlaneGeometry(2, 2);
-        const material = new THREE.ShaderMaterial({
-            vertexShader: document.getElementById('vertexShader').textContent,
-            fragmentShader: document.getElementById('fragmentShader').textContent
-        });
-        const plane = new THREE.Mesh(geometry, material);
-        scene.add(plane);
-
-        camera.position.z = 1;
-
-        // Animation loop
-        function animate() {
-            requestAnimationFrame(animate);
-            renderer.render(scene, camera);
+        // Countdown Timer
+        function countdown() {
+            const launchDate = new Date("2025-01-01T00:00:00").getTime();
+            const timer = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = launchDate - now;
+                if (distance < 0) {
+                    clearInterval(timer);
+                    document.getElementById("countdown").innerHTML = "We are live!";
+                    return;
+                }
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }, 1000);
         }
-        animate();
-
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-        });
+        countdown();
     </script>
 </body>
 </html>
